@@ -50,6 +50,7 @@ const Table = () => {
   alt={`Employee ${values.name}`}
   style={{ maxWidth: "50px", maxHeight: "50px" }}
 />
+
               </td>
               <td>{values.name}</td>
               <td>{values.department}</td>

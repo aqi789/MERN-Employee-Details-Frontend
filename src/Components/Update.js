@@ -8,6 +8,7 @@ const Update = () => {
   const [department, setDepartment] = useState("");
   const [designation, setDesignation] = useState("");
   const [salary, setSalary] = useState("");
+  const [image, setImage]=useState("");
 
   const { id } = useParams();
 
@@ -28,6 +29,11 @@ const Update = () => {
     setSalary(e.target.value);
   };
 
+  const handleImageChange = (e) => {
+    const file=e.target.files[0];
+    setImage(file);
+  }
+
   useEffect(() => {
     axios
       .get(`http://localhost:8000/getuserbyid/${id}`)
@@ -37,34 +43,58 @@ const Update = () => {
         setDepartment(result.data.department);
         setDesignation(result.data.designation);
         setSalary(result.data.salary);
+        setImage(result.data.image);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [id]);
 
+  // const handleUpdate = () => {
+  //   axios
+  //     .put(`http://localhost:8000/updateuser/${id}`, {
+  //       name,
+  //       department,
+  //       designation,
+  //       salary,
+  //       image: image ? image.name : null,
+  //     })
+  //     .then((res) => {
+  //       // Assuming the response contains the updated user with the correct image path
+  //       setImage(res.data.image); // Update the image state
+  //       navigate("/view");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  
   const handleUpdate = () => {
+    console.log("Updating...");
     axios
       .put(`http://localhost:8000/updateuser/${id}`, {
         name,
         department,
         designation,
-        salary
+        salary,
+        image: image ? image.name : null,
       })
       .then((res) => {
-        console.log(res);
+        console.log("Update successful:", res.data);
+        setImage(res.data.image);
         navigate("/view");
       })
       .catch((err) => {
-        console.log(err);
+        console.error("Update failed:", err);
       });
   };
+  
 
   return (
     <div>
       <h2>Update Employee Details</h2>
       <form>
-        <input
+        <input 
           type="text"
           placeholder="Employee Name"
           value={name}
@@ -92,6 +122,8 @@ const Update = () => {
           onChange={handleSalaryChange}
         />
         <br />
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+        <br/>
         <button onClick={handleUpdate}>
           Update
         </button>

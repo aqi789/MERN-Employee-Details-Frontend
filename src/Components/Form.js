@@ -27,6 +27,7 @@ const Form = () => {
   const handleSalary = (e) => {
     setSalary(e.target.value);
   };
+
   const handleImage = (e) => {
     setImage(e.target.files[0]);
   };
@@ -37,7 +38,13 @@ const Form = () => {
       console.error("Please fill in all fields");
       return;
     }
-    const formData = { name, department, designation, salary, image };
+    const formData = new FormData();
+    formData.append("employeeImage", image);
+    formData.append("name", name);
+    formData.append("department", department);
+    formData.append("designation", designation);
+    formData.append("salary", salary);
+
     axios
       .post(`http://localhost:8000/post`, formData)
       .then((res) => {
@@ -49,7 +56,6 @@ const Form = () => {
       });
   };
 
-
   return (
     <div className="form">
       <div>
@@ -57,7 +63,6 @@ const Form = () => {
       </div>
       <div>
         <form encType="multipart/form-data">
-         
           <input
             type="text"
             placeholder="Employee Name"
@@ -87,7 +92,7 @@ const Form = () => {
           />
           <br />
           <input type="file" accept="image/*" onChange={handleImage} />
-          <br/>
+          <br />
           <button type="submit" onClick={handleSubmit}>
             Submit
           </button>

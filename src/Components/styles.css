@@ -28,14 +28,15 @@ button:hover {
     background-color: whitesmoke;
     color: black;
 }
-table, th td {
-    border-collapse: collapse;
-}
 table td {
     border: 1px solid black;
 }table, th td {
     border-collapse: collapse;
 }
-table td {
-    border: 1px solid black;
+table {
+    margin: 10% 25%;
+    text-align: center;
+}
+td {
+    padding: 10px;
 }

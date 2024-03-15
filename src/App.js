@@ -11,7 +11,7 @@ function App() {
           <Route path='/' element={<Form />} />
           <Route path='/view' element={<Table />} />
           <Route path='/update/:id' element={<Update />} />
-        </Routes>
+        </Routes>   
       </Router>
     </div>
   );
